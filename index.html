@@ -7,7 +7,6 @@
     <title>Curso introductorio de CSS</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <script src='main.js'></script>
 </head>
 
 <body>
@@ -15,9 +14,14 @@
         <header class="grid-header">
             <img src="leal360-seeklogo.png" class="logo-header">
             <h1 class="nombre-header-curso">Curso Introductorio de CSS.</h1>
+            <button class="hamburger-menu" aria-label="Abrir menu de navegacion">
+                <span class="hamburger-icon"></span>
+                <span class="hamburger-icon"></span>
+                <span class="hamburger-icon"></span>
+            </button>
         </header>
 
-        <nav class="grid-sidebar">
+        <nav class="grid-sidebar" id="main-sidebar">
             <h2>Tutorial de CSS</h2>
             <ul>
                 <li><a href="#tema1">Inicio</a></li>
@@ -164,6 +168,7 @@
             </div>
         </main>
     </div>
+    <script src='main.js'></script>
 </body>
 
 </html>
