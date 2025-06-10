@@ -10,6 +10,7 @@ html, body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #f4f4f4;
     color: black;
+    scroll-padding-top: 150px; /* Ajusta este valor al alto de tu header + un poco de margen */
 }
 
 
@@ -188,6 +189,27 @@ html, body {
     background-color: var(--color-primario);
     color: var(--color-texto-claro);
 }
+
+/* ---ESTILOS DE BOTON DE HAMBURGUESA (GLOBALES) ---*/
+.hamburger-menu {
+    display: none; /*Ocultar por defecto en escritorio*/
+    position: absolute; /*Posicionamiento absoluto para colocarlo sobre el header*/
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1000; /*Asegurar que este por encima de otros elementos*/
+    }
+    
+    /* Transición para las líneas de la hamburguesa (puede ser global) */
+    .hamburger-icon {
+    transition: all 0.3s ease; /*Transicion suave para la animacion*/
+    }
+
+
+
 /* --- MEDIA QUERIES PARA ADAPTABILIDAD --- */
 
 /* Media Query para pantallas medianas (tabletas) */
@@ -199,25 +221,79 @@ html, body {
     /* 1. Redefinir las columnas del contenedor */
     .grid-container {
         grid-template-columns: 1fr; /* Una sola columna que ocupa todo el ancho */
-        grid-template-rows: 30%
-                            30%
-                            1fr;
-    /* 3. Reasignar la posición de cada ítem en la nueva cuadrícula */
+        grid-template-rows: auto /*Header en auto*/
+                                 /* Eliminamos la fila de la sidebar de aquí, ya que la mostraremos/ocultaremos con JS */
+                            1fr; /*contenido principal en 1fr*/
+        height: auto; /*Ajusta la altura a auto para que el contenido principal fluya*/                           
     }
-
+ 
+    /* 3. Reasignar la posición de cada ítem en la nueva cuadrícula */
     .grid-header {
         grid-column: 1; /*ocupa la unica columna*/
         grid-row: 1; /*Se posiciona en la primera fila*/
+        position: relative; /*Para que el boton de hamburguesa se posicione respecto a el*/
+        text-align: left; /*alinea el titulo a la izquierda*/
+        padding-right: 70px; /*Deja espacio para el boton de hamburguesa*/
     }
 
+    .hamburger-menu {
+        display: block;/*Mostrar el boton de hamburguesa solo en moviles*/
+    }
+    
+    .hamburger-icon {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--color-fondo-claro); /*Color de las lineas de hamburguesa*/
+    margin: 5px 0;
+    }
+
+    /* --- ANIMACIÓN DE HAMBURGUESA A "X" --- */
+/* Selecciona la PRIMERA línea cuando el botón hamburguesa tiene la clase 'active' */
+.hamburger-menu.active .hamburger-icon:nth-child(1) {
+    transform: translateY(8px) rotate(45deg); /* Mueve la primera línea 8px hacia abajo y la rota 45 grados */
+}
+
+/* Selecciona la SEGUNDA línea cuando el botón hamburguesa tiene la clase 'active' */
+.hamburger-menu.active .hamburger-icon:nth-child(2) {
+    opacity: 0; /* Oculta la línea del medio haciendola totalmente transparente */
+}
+
+/* Selecciona la TERCERA línea cuando el botón hamburguesa tiene la clase 'active' */
+.hamburger-menu.active .hamburger-icon:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg); /* Mueve la tercera línea 8px hacia arrib y la rota -45 grados */
+}
+
+
+    /* ESTILOS CLAVE PARA EL MENÚ HAMBURGUESA */
     .grid-sidebar {
-        grid-column: 1;
-        grid-row: 2; /*Se posiciona en la segunda fila*/
+        position:fixed; /* Fija la sidebar en la pantalla */
+        top: 0;
+        left: -250px;  /* Oculta la sidebar fuera de la pantalla (su propio ancho) */
+        width: 250px;  /* Ancho fijo de la sidebar */
+        height: 100%;  /* Ocupa toda la altura de la ventana */
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+        transition: left 0.3s ease-in-out; /*Animacion de entrada/salida*/
+        z-index: 999; /* Asegura que esté por encima de otros elementos */
+        padding-top: 60px; /* Espacio para que el contenido no se superponga con la parte superior */
+        background-color: var(--color-fondo-claro);
+        color: var(--color-texto-oscuro);
+    }
+    
+    /* Clase que JavaScript añadirá para mostrar el menú */
+    .grid-sidebar.active { 
+        left: 0; /* Muestra la sidebar deslizándola a la pantalla */
     }
 
+    body.sidebar-open {
+        overflow: hidden; /* Evita el scroll del fondo cuando el menú está abierto */
+    }
+
+/*Puedes ajustar la posición del main content en móviles si es necesario,
+pero con position:fixed en la sidebar, el main content debería fluir bien*/
     .grid-main-content {
         grid-column: 1;
-        grid-row: 3;
+        grid-row: 2;
     }
 
     .grid-main-content section h2 {
